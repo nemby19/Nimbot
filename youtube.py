@@ -4,6 +4,30 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+async def get_uploads_playlist():
+    url = (
+        f"https://www.googleapis.com/youtube/v3/channels"
+        f"?part=contentDetails"
+        f"&id={CHANNEL_ID}"
+        f"&key={API_KEY}"
+    )
+
+    async with aiohttp.ClientSession() as session:
+        async with session.get(url) as response:
+
+            if response.status != 200:
+                print(await response.text())
+                return None
+
+            data = await response.json()
+
+            print("Channel API:", data)
+
+            if not data["items"]:
+                return None
+
+            return data["items"][0]["contentDetails"]["relatedPlaylists"]["uploads"]
+
 API_KEY = os.getenv("YOUTUBE_API_KEY")
 CHANNEL_ID = os.getenv("CHANNEL_ID")
 
