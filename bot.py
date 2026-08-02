@@ -9,7 +9,11 @@ from storage import (
     load_last_live,
     save_last_live
 )
-from youtube import check_live, get_latest_video
+from youtube import (
+    check_live,
+    get_latest_video,
+    get_uploads_playlist
+)
 from notifier import send_video_notification
 
 load_dotenv()
@@ -124,6 +128,9 @@ async def on_ready():
 
     print("Slash commands synced!")
 
+    playlist = await get_uploads_playlist()
+    print("Uploads Playlist:", playlist)
+
     live = await check_live()
 
     if live:
@@ -154,8 +161,8 @@ async def latest(interaction: discord.Interaction):
         await interaction.response.send_message("❌ Couldn't find any videos.")
         return
 
-    title = video["snippet"]["title"]
-    video_id = video["id"]["videoId"]
+    title = video["title"]
+    video_id = video["video_id"]
 
     embed = discord.Embed(
         title="🎬 Latest Upload",
@@ -169,7 +176,7 @@ async def latest(interaction: discord.Interaction):
         inline=False
     )
 
-    embed.set_thumbnail(url=video["snippet"]["thumbnails"]["high"]["url"])
+    embed.set_thumbnail(url=video["thumbnail"])
 
     await interaction.response.send_message(embed=embed)
 
