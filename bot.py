@@ -128,16 +128,13 @@ async def on_ready():
 
     print("Slash commands synced!")
 
-    playlist = await get_uploads_playlist()
-    print("Uploads Playlist:", playlist)
-
-    live = await check_live()
-
-    if live:
-        print("🔴 LIVE DETECTED!")
-        print(live["snippet"]["title"])
-    else:
-        print("No live stream found.")
+async def background_tasks():
+    try:
+        playlist = await get_uploads_playlist()
+        print("Uploads Playlist:", playlist)
+    except Exception as e:
+        print("ERROR in get_uploads_playlist():", repr(e))
+        print("No live stream information available.")
 
     while True:
         try:
