@@ -17,7 +17,14 @@ load_dotenv()
 TOKEN = os.getenv("DISCORD_TOKEN")
 API_KEY = os.getenv("YOUTUBE_API_KEY")
 CHANNEL_ID = os.getenv("CHANNEL_ID")
-DISCORD_CHANNEL_ID = int(os.getenv("DISCORD_CHANNEL_ID"))
+print("DISCORD_CHANNEL_ID from env:", repr(os.getenv("DISCORD_CHANNEL_ID")))
+
+DISCORD_CHANNEL = os.getenv("DISCORD_CHANNEL_ID")
+
+if DISCORD_CHANNEL is None:
+    raise RuntimeError("DISCORD_CHANNEL_ID environment variable is missing!")
+
+DISCORD_CHANNEL_ID = int(DISCORD_CHANNEL)
 
 intents = discord.Intents.default()
 client = discord.Client(intents=intents)
