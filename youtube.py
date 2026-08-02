@@ -11,7 +11,7 @@ CHANNEL_ID = os.getenv("CHANNEL_ID")
 async def get_latest_video():
     url = (
         f"https://www.googleapis.com/youtube/v3/search"
-        f"?part=snippet"
+        f"?part=snippet,id"
         f"&channelId={CHANNEL_ID}"
         f"&order=date"
         f"&type=video"
@@ -22,17 +22,16 @@ async def get_latest_video():
     async with aiohttp.ClientSession() as session:
         async with session.get(url) as response:
 
-            if response.status != 200:
-                return None
+            print("Status:", response.status)
 
             data = await response.json()
 
-            print("Latest video API response:")
-            print(data)
+            print("Response:", data)
 
-            print(data)
+            if response.status != 200:
+                return None
 
-            if not data["items"]:
+            if not data.get("items"):
                 return None
 
             return data["items"][0]
