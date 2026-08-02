@@ -27,6 +27,9 @@ async def get_latest_video():
 
             data = await response.json()
 
+            print("Latest video API response:")
+            print(data)
+
             print(data)
 
             if not data["items"]:
