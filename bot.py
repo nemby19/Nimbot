@@ -193,4 +193,7 @@ async def live(interaction: discord.Interaction):
 
     await interaction.response.send_message(embed=embed)
 
+print("Token loaded:", TOKEN is not None)
+print("Token length:", len(TOKEN) if TOKEN else 0)
+
 client.run(TOKEN)

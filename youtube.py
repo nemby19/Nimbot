@@ -27,6 +27,8 @@ async def get_latest_video():
 
             data = await response.json()
 
+            print(data)
+
             if not data["items"]:
                 return None
 
@@ -50,6 +52,9 @@ async def check_live():
                 return None
 
             data = await response.json()
+
+            print("YouTube API response:")
+            print(data)
 
             if not data["items"]:
                 return None
