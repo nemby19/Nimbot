@@ -218,9 +218,6 @@ async def live(interaction: discord.Interaction):
 
 print("Token loaded:", TOKEN is not None)
 print("Token length:", len(TOKEN) if TOKEN else 0)
-
-print("Token loaded:", TOKEN is not None)
-print("Token length:", len(TOKEN) if TOKEN else 0)
 print("First 10 chars:", TOKEN[:10] if TOKEN else "None")
 
 client.run(TOKEN)
