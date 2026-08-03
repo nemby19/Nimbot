@@ -124,7 +124,8 @@ async def check_live_notification():
     else:
         print("❌ Couldn't find Discord channel.")    
 
-    
+background_task = None
+
 @client.event
 async def on_ready():
 
@@ -136,6 +137,8 @@ async def on_ready():
     await tree.sync(guild=guild)
 
     print("Slash commands synced!")
+
+    client.loop.create_task(background_tasks())
 
 async def background_tasks():
     try:
@@ -215,5 +218,9 @@ async def live(interaction: discord.Interaction):
 
 print("Token loaded:", TOKEN is not None)
 print("Token length:", len(TOKEN) if TOKEN else 0)
+
+print("Token loaded:", TOKEN is not None)
+print("Token length:", len(TOKEN) if TOKEN else 0)
+print("First 10 chars:", TOKEN[:10] if TOKEN else "None")
 
 client.run(TOKEN)
