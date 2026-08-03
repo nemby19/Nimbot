@@ -92,13 +92,20 @@ async def check_youtube():
 async def check_live_notification():
     global last_live
 
+    print("🔍 Checking for live stream...")
+
     stream = await check_live()
+
+    print("Live result:", stream)
 
     if stream is None:
         return
 
     if stream["video_id"] == last_live:
+        print("Already notified for this stream.")
         return
+
+    print("New live stream detected!")
 
     last_live = stream["video_id"]
     save_last_live(last_live)
@@ -106,6 +113,7 @@ async def check_live_notification():
     channel = client.get_channel(DISCORD_CHANNEL_ID)
 
     if channel:
+        print("Sending live notification...")
         await send_video_notification(
             channel,
             stream["title"],
@@ -113,9 +121,10 @@ async def check_live_notification():
             stream["thumbnail"],
             live=True
         )
+    else:
+        print("❌ Couldn't find Discord channel.")    
 
-        
-
+    
 @client.event
 async def on_ready():
 
