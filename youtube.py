@@ -33,9 +33,10 @@ async def get_uploads_playlist():
 
 async def get_latest_video():
     playlist = await get_uploads_playlist()
+    print("Uploads playlist ID:", playlist)
 
     if playlist is None:
-        return None
+     return None
 
     url = (
         f"https://www.googleapis.com/youtube/v3/playlistItems"
@@ -49,6 +50,9 @@ async def get_latest_video():
         async with session.get(url) as response:
 
             data = await response.json()
+
+            print("Playlist API response:")
+            print(data)
 
             print("Playlist API:", data)
 

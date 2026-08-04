@@ -138,9 +138,11 @@ async def on_ready():
 
     print("Slash commands synced!")
 
-    client.loop.create_task(background_tasks())
+    asyncio.create_task(background_tasks())
 
 async def background_tasks():
+    print("🚀 Background task started!")
+    
     try:
         playlist = await get_uploads_playlist()
         print("Uploads Playlist:", playlist)
@@ -219,5 +221,6 @@ async def live(interaction: discord.Interaction):
 print("Token loaded:", TOKEN is not None)
 print("Token length:", len(TOKEN) if TOKEN else 0)
 print("First 10 chars:", TOKEN[:10] if TOKEN else "None")
+print("Token repr:", repr(TOKEN))
 
 client.run(TOKEN)
